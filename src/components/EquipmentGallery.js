@@ -12,8 +12,8 @@ const EquipmentGallery = () => {
       image: 'https://kasla-wed.ru/upload/iblock/af4/6mp05ltpsiaww1bxt92yiolgvm1s277x.jpg', 
       description: 'Световая и звуковая техника для организации незабываемых свадебных торжеств.',
       examples: [
-        { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оформление для свадебного зала', price: '25,000 рублей',title: 'Световое оборудование' },
-        { image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTisp37VlXiKDd7FJGXHkZIh6dLxiU_kI5U_g&s', description: 'Звуковое оборудование для свадебной церемонии', price: '20,000 рублей',title: 'Звуковое оборудование' },
+        { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оборудование 1-8 тотемов', price: '10,000 - 30,000 рублей',title: 'Световое оборудование' },
+        { image: 'https://pop-music.ru/upload/medialibrary/68e/68ef33b0c36b868224aa65e5145b6d66.jpg', description: 'Звуковое оборудование 2-6кВТ', price: '10,000 - 30,000 рублей',title: 'Звуковое оборудование' },
       ]
     },
     { 
