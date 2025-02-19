@@ -6,10 +6,12 @@ import Features from "./components/Features";
 import EquipmentGallery from "./components/EquipmentGallery";
 import EquipmentDetail from "./pages/EquipmentDetail";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-gray-100">
         <Header />
         <Routes>
@@ -23,7 +25,7 @@ const App = () => {
           } />
           <Route path="/equipment/:id" element={<EquipmentDetail />} />
         </Routes>
-        <Footer id="contact" />
+        <Footer />
       </div>
     </Router>
   );
