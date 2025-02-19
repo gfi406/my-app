@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 const EquipmentDetail = () => {
   const { state } = useLocation();  
-  const { title, image, description, examples } = state || {};  /
+  const { title, image, description, examples } = state || {};  
 
   
   if (!state) {
