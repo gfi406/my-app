@@ -1,17 +1,33 @@
 import React, { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import logo from "../media/logo.jpg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
 
-  // Обработчик для плавной прокрутки с правильным смещением
+  
+  const handleLogoClick = (e) => {
+    if (isHomePage) {
+      
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      
+      navigate('/');
+    }
+  };
+
+  
   const handleSmoothScroll = (e, id) => {
     e.preventDefault();
     
-    // Закрываем мобильное меню при клике
+    
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
@@ -19,7 +35,7 @@ const Header = () => {
     const element = document.getElementById(id);
     if (!element) return;
     
-    const headerOffset = 64; // Высота вашего хедера
+    const headerOffset = 64; 
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
     
@@ -29,7 +45,7 @@ const Header = () => {
     });
   };
 
-  // Функция для создания правильных ссылок
+  
   const getNavLink = (section) => {
     if (isHomePage) {
       return {
@@ -48,9 +64,12 @@ const Header = () => {
     <header className="fixed w-full bg-white shadow-md z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/">
+          <div 
+            onClick={handleLogoClick} 
+            className="cursor-pointer"
+          >
             <img src={logo} alt="RentPro Logo" className="h-12 w-auto" />
-          </Link>
+          </div>
 
           <nav className="hidden md:flex space-x-8">
             <a 

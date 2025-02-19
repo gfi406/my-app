@@ -6,15 +6,15 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 64px; /* Высота header */
+    scroll-padding-top: 64px; 
   }
   
-  /* Этот метод лучше работает на мобильных устройствах */
+  
   #about, #equipment, #contact {
     scroll-margin-top: 64px;
   }
   
-  /* Убедимся что секции имеют достаточное расстояние между собой */
+ 
   section {
     position: relative;
   }

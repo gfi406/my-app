@@ -2,10 +2,10 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 const EquipmentDetail = () => {
-  const { state } = useLocation();  // Получаем данные, переданные через navigate
-  const { title, image, description, examples } = state || {};  // Деструктурируем данные
+  const { state } = useLocation();  
+  const { title, image, description, examples } = state || {};  /
 
-  // Проверка, что данные присутствуют
+  
   if (!state) {
     return <div>Не удалось найти информацию об оборудовании.</div>;
   }
