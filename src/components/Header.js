@@ -7,12 +7,40 @@ const Header = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
+  // Обработчик для плавной прокрутки с правильным смещением
+  const handleSmoothScroll = (e, id) => {
+    e.preventDefault();
+    
+    // Закрываем мобильное меню при клике
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+    
+    const element = document.getElementById(id);
+    if (!element) return;
+    
+    const headerOffset = 64; // Высота вашего хедера
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  };
+
   // Функция для создания правильных ссылок
   const getNavLink = (section) => {
     if (isHomePage) {
-      return `#${section}`;
+      return {
+        href: `#${section}`,
+        onClick: (e) => handleSmoothScroll(e, section)
+      };
     } else {
-      return `/#${section}`;
+      return {
+        href: `/#${section}`,
+        onClick: null
+      };
     }
   };
 
@@ -25,9 +53,27 @@ const Header = () => {
           </Link>
 
           <nav className="hidden md:flex space-x-8">
-            <a href={getNavLink("about")} className="text-gray-600 hover:text-blue-600 transition-colors">О нас</a>
-            <a href={getNavLink("equipment")} className="text-gray-600 hover:text-blue-600 transition-colors">Оборудование</a>
-            <a href={getNavLink("contact")} className="text-gray-600 hover:text-blue-600 transition-colors">Контакты</a>
+            <a 
+              href={getNavLink("about").href} 
+              onClick={getNavLink("about").onClick}
+              className="text-gray-600 hover:text-blue-600 transition-colors"
+            >
+              О нас
+            </a>
+            <a 
+              href={getNavLink("equipment").href}
+              onClick={getNavLink("equipment").onClick}
+              className="text-gray-600 hover:text-blue-600 transition-colors"
+            >
+              Оборудование
+            </a>
+            <a 
+              href={getNavLink("contact").href}
+              onClick={getNavLink("contact").onClick}
+              className="text-gray-600 hover:text-blue-600 transition-colors"
+            >
+              Контакты
+            </a>
           </nav>
 
           <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -39,9 +85,27 @@ const Header = () => {
 
         {isMenuOpen && (
           <div className="md:hidden px-2 pt-2 pb-3 space-y-1">
-            <a href={getNavLink("about")} className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">О нас</a>
-            <a href={getNavLink("equipment")} className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">Оборудование</a>
-            <a href={getNavLink("contact")} className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">Контакты</a>
+            <a 
+              href={getNavLink("about").href}
+              onClick={getNavLink("about").onClick}
+              className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md"
+            >
+              О нас
+            </a>
+            <a 
+              href={getNavLink("equipment").href}
+              onClick={getNavLink("equipment").onClick}
+              className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md"
+            >
+              Оборудование
+            </a>
+            <a 
+              href={getNavLink("contact").href}
+              onClick={getNavLink("contact").onClick}
+              className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md"
+            >
+              Контакты
+            </a>
           </div>
         )}
       </div>

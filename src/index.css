@@ -9,18 +9,12 @@ html {
     scroll-padding-top: 64px; /* Высота header */
   }
   
-  @media (max-width: 768px) {
-    html {
-      scroll-padding-top: 56px; /* Меньшая высота header для мобильных */
-    }
-  }
-  
+  /* Этот метод лучше работает на мобильных устройствах */
   #about, #equipment, #contact {
     scroll-margin-top: 64px;
   }
   
-  @media (max-width: 768px) {
-    #about, #equipment, #contact {
-      scroll-margin-top: 56px;
-    }
+  /* Убедимся что секции имеют достаточное расстояние между собой */
+  section {
+    position: relative;
   }
