@@ -6,10 +6,21 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 64px; /* Высота header - 16 высота */
+    scroll-padding-top: 64px; /* Высота header */
+  }
+  
+  @media (max-width: 768px) {
+    html {
+      scroll-padding-top: 56px; /* Меньшая высота header для мобильных */
+    }
   }
   
   #about, #equipment, #contact {
-    padding-top: 80px;
-    margin-top: -80px;
+    scroll-margin-top: 64px;
+  }
+  
+  @media (max-width: 768px) {
+    #about, #equipment, #contact {
+      scroll-margin-top: 56px;
+    }
   }
