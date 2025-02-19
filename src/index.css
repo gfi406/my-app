@@ -3,3 +3,13 @@
 @tailwind components;
 
 @tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 64px; /* Высота header - 16 высота */
+  }
+  
+  #about, #equipment, #contact {
+    padding-top: 80px;
+    margin-top: -80px;
+  }

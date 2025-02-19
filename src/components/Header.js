@@ -1,19 +1,33 @@
 import React, { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import logo from "../media/logo.jpg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
+  // Функция для создания правильных ссылок
+  const getNavLink = (section) => {
+    if (isHomePage) {
+      return `#${section}`;
+    } else {
+      return `/#${section}`;
+    }
+  };
 
   return (
     <header className="fixed w-full bg-white shadow-md z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <img src={logo} alt="RentPro Logo" className="h-12 w-auto" />
+          <Link to="/">
+            <img src={logo} alt="RentPro Logo" className="h-12 w-auto" />
+          </Link>
 
           <nav className="hidden md:flex space-x-8">
-            <a href="#about" className="text-gray-600 hover:text-blue-600 transition-colors">О нас</a>
-            <a href="#equipment" className="text-gray-600 hover:text-blue-600 transition-colors">Оборудование</a>
-            <a href="#contact" className="text-gray-600 hover:text-blue-600 transition-colors">Контакты</a>
+            <a href={getNavLink("about")} className="text-gray-600 hover:text-blue-600 transition-colors">О нас</a>
+            <a href={getNavLink("equipment")} className="text-gray-600 hover:text-blue-600 transition-colors">Оборудование</a>
+            <a href={getNavLink("contact")} className="text-gray-600 hover:text-blue-600 transition-colors">Контакты</a>
           </nav>
 
           <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -25,9 +39,9 @@ const Header = () => {
 
         {isMenuOpen && (
           <div className="md:hidden px-2 pt-2 pb-3 space-y-1">
-            <a href="#about" className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">О нас</a>
-            <a href="#equipment" className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">Оборудование</a>
-            <a href="#contact" className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">Контакты</a>
+            <a href={getNavLink("about")} className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">О нас</a>
+            <a href={getNavLink("equipment")} className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">Оборудование</a>
+            <a href={getNavLink("contact")} className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-md">Контакты</a>
           </div>
         )}
       </div>
