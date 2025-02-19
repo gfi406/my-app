@@ -11,7 +11,7 @@ const Hero = () => {
           Предоставляем качественное оборудование для вашего бизнеса и проектов
         </p>
         <a 
-          href="https://web.telegram.org/k/#@deadsanfrost" 
+          href="https://wa.me/79168497675" 
           target="_blank" 
           rel="noopener noreferrer"
           className="inline-block bg-blue-600 text-white px-6 md:px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
