@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const EquipmentDetail = () => {
   const { state } = useLocation();
   const sliderRef = useRef(null);
+  const [autoplay, setAutoplay] = useState(true);
 
   if (!state) {
     return <div>Не удалось найти информацию об оборудовании.</div>;
@@ -16,14 +17,41 @@ const EquipmentDetail = () => {
   const { title, image, description, examples } = state;
 
   const sliderSettings = {
-    dots: false, // Changed from true to false to remove the dots
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: autoplay,
     autoplaySpeed: 1000,
     arrows: false,
+    swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
+    touchThreshold: 5,
+    useCSS: true,
+    useTransform: true,
+    waitForAnimate: false,
+    pauseOnHover: true,
+    beforeChange: () => {
+      // Можно добавить логику перед сменой слайда
+    },
+    afterChange: () => {
+      // Можно добавить логику после смены слайда
+    },
+    // Остановка автоплея при взаимодействии
+    onSwipe: () => setAutoplay(false),
+  };
+
+  // Обработчики для стрелок, которые также останавливают автоплей
+  const handlePrev = () => {
+    setAutoplay(false);
+    sliderRef.current?.slickPrev();
+  };
+
+  const handleNext = () => {
+    setAutoplay(false);
+    sliderRef.current?.slickNext();
   };
 
   return (
@@ -33,22 +61,22 @@ const EquipmentDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Левая колонка с изображениями (слайдер) */}
           <div className="relative bg-white rounded-lg shadow-md overflow-hidden h-96">
-            {/* Кастомные стрелки */}
+            {/* Кастомные стрелки - скрываем на мобильных устройствах */}
             <button 
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600"
-              onClick={() => sliderRef.current?.slickPrev()}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
+              onClick={handlePrev}
             >
               <ChevronLeft size={24} />
             </button>
 
             <button 
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600"
-              onClick={() => sliderRef.current?.slickNext()}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
+              onClick={handleNext}
             >
               <ChevronRight size={24} />
             </button>
 
-            <div className="h-full">
+            <div className="h-full touch-pan-y">
               <Slider ref={sliderRef} {...sliderSettings} className="h-full">
                 {image?.map((imgSrc, index) => (
                   <div key={index} className="h-96">
@@ -56,6 +84,8 @@ const EquipmentDetail = () => {
                       src={imgSrc} 
                       alt={`Фото ${index + 1}`} 
                       className="w-full h-full object-cover" 
+                      draggable="false"
+                      onTouchStart={() => setAutoplay(false)}
                     />
                   </div>
                 ))}

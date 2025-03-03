@@ -12,7 +12,7 @@ const EquipmentGallery = () => {
       image: [
         'https://kasla-wed.ru/upload/iblock/af4/6mp05ltpsiaww1bxt92yiolgvm1s277x.jpg', 
         'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg',
-        'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg'
+        'https://news.store.rambler.ru/img/a672e36897d359c94369a36ec38734db?img-format=auto&img-1-resize=height:400,fit:max&img-2-filter=sharpen'
       ],
       description: 'Световая и звуковая техника для организации незабываемых свадебных торжеств.',
       examples: [
