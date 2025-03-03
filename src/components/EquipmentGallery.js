@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -52,14 +52,63 @@ const EquipmentGallery = () => {
 
 const EquipmentCard = ({ item, navigate }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [autoplay, setAutoplay] = useState(true);
+  const [autoplayInterval, setAutoplayInterval] = useState(null);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   const imagesLength = item.image.length;
+  const slideRef = useRef(null);
 
-  const prevSlide = () => {
+  // Функция для автоматического переключения слайдов
+  useEffect(() => {
+    if (autoplay) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev === imagesLength - 1 ? 0 : prev + 1));
+      }, 3000);
+      setAutoplayInterval(interval);
+    } else if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+    }
+
+    return () => {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+      }
+    };
+  }, [autoplay, imagesLength, autoplayInterval]);
+
+  const prevSlide = (e) => {
+    if (e) e.stopPropagation();
+    setAutoplay(false);
     setCurrentIndex((prev) => (prev === 0 ? imagesLength - 1 : prev - 1));
   };
 
-  const nextSlide = () => {
+  const nextSlide = (e) => {
+    if (e) e.stopPropagation();
+    setAutoplay(false);
     setCurrentIndex((prev) => (prev === imagesLength - 1 ? 0 : prev + 1));
+  };
+
+  // Обработчики для свайпов
+  const handleTouchStart = (e) => {
+    setAutoplay(false);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      // Свайп влево
+      nextSlide();
+    }
+
+    if (touchStart - touchEnd < -75) {
+      // Свайп вправо
+      prevSlide();
+    }
   };
 
   return (
@@ -67,24 +116,49 @@ const EquipmentCard = ({ item, navigate }) => {
       className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105"
       onClick={() => navigate(`/equipment/${item.id}`, { state: item })}
     >
-      <div className="relative">
+      <div 
+        className="relative" 
+        ref={slideRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {/* Картинка слайдера */}
-        <img src={item.image[currentIndex]} alt={item.title} className="w-full h-64 object-cover" />
+        <img 
+          src={item.image[currentIndex]} 
+          alt={item.title} 
+          className="w-full h-64 object-cover" 
+          draggable="false"
+        />
 
-        {/* Кнопки переключения */}
+        {/* Кнопки переключения - скрываем на мобильных */}
         <button 
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600"
-          onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
+          onClick={prevSlide}
         >
           <ChevronLeft size={24} />
         </button>
 
         <button 
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600"
-          onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
+          onClick={nextSlide}
         >
           <ChevronRight size={24} />
         </button>
+
+        {/* Индикатор страниц */}
+        {imagesLength > 1 && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+            {Array.from({ length: imagesLength }).map((_, index) => (
+              <span
+                key={index}
+                className={`h-2 w-2 rounded-full ${
+                  currentIndex === index ? 'bg-white' : 'bg-gray-400'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Контент */}

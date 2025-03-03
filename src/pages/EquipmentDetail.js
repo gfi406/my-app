@@ -1,48 +1,144 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const EquipmentGallery = () => {
-  const navigate = useNavigate();
+const EquipmentDetail = () => {
+  const { state } = useLocation();
+  const sliderRef = useRef(null);
+  const [autoplay, setAutoplay] = useState(true);
 
-  const equipmentList = [
-    { 
-      id: 1, 
-      title: 'Свадьбы', 
-      image: [
-        'https://kasla-wed.ru/upload/iblock/af4/6mp05ltpsiaww1bxt92yiolgvm1s277x.jpg', 
-        'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg',
-        'https://news.store.rambler.ru/img/a672e36897d359c94369a36ec38734db?img-format=auto&img-1-resize=height:400,fit:max&img-2-filter=sharpen'
-      ],
-      description: 'Световая и звуковая техника для организации незабываемых свадебных торжеств.',
-      examples: [
-        { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оборудование 1-8 тотемов', price: '10,000 - 30,000 рублей',title: 'Световое оборудование' },
-        { image: 'https://pop-music.ru/upload/medialibrary/68e/68ef33b0c36b868224aa65e5145b6d66.jpg', description: 'Звуковое оборудование 2-6кВТ', price: '10,000 - 30,000 рублей',title: 'Звуковое оборудование' },
-      ]
+  if (!state) {
+    return <div>Не удалось найти информацию об оборудовании.</div>;
+  }
+
+  const { title, image, description, examples } = state;
+
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: autoplay,
+    autoplaySpeed: 1000,
+    arrows: false,
+    swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
+    touchThreshold: 5,
+    useCSS: true,
+    useTransform: true,
+    waitForAnimate: false,
+    pauseOnHover: true,
+    beforeChange: () => {
+      // Можно добавить логику перед сменой слайда
     },
-    { 
-      id: 2, 
-      title: 'Корпоративы', 
-      image: [
-        'https://party2go.ru/wp-content/uploads/2022/04/25.jpg',
-        'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg',
-        'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg'
-      ], 
-      description: 'Профессиональная звуковая и световая аппаратура для корпоративных мероприятий.',
-      examples: [
-        { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оборудование 1-8 тотемов', price: '10,000 - 30,000 рублей',title: 'Световое оборудование' },
-        { image: 'https://pop-music.ru/upload/medialibrary/68e/68ef33b0c36b868224aa65e5145b6d66.jpg', description: 'Звуковое оборудование 2-6кВТ', price: '10,000 - 30,000 рублей',title: 'Звуковое оборудование' },
-      ]
-    }
-  ];
+    afterChange: () => {
+      // Можно добавить логику после смены слайда
+    },
+    // Остановка автоплея при взаимодействии
+    onSwipe: () => setAutoplay(false),
+  };
+
+  // Обработчики для стрелок, которые также останавливают автоплей
+  const handlePrev = () => {
+    setAutoplay(false);
+    sliderRef.current?.slickPrev();
+  };
+
+  const handleNext = () => {
+    setAutoplay(false);
+    sliderRef.current?.slickNext();
+  };
 
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Наше оборудование</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {equipmentList.map((item) => (
-            <EquipmentCard key={item.id} item={item} navigate={navigate} />
+        <h2 className="text-3xl font-bold text-center mb-12">Подробности об оборудовании</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Левая колонка с изображениями (слайдер) */}
+          <div className="relative bg-white rounded-lg shadow-md overflow-hidden h-96">
+            {/* Кастомные стрелки - скрываем на мобильных устройствах */}
+            <button 
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
+              onClick={handlePrev}
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            <button 
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
+              onClick={handleNext}
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            <div className="h-full touch-pan-y">
+              <Slider ref={sliderRef} {...sliderSettings} className="h-full">
+                {image?.map((imgSrc, index) => (
+                  <div key={index} className="h-96">
+                    <img 
+                      src={imgSrc} 
+                      alt={`Фото ${index + 1}`} 
+                      className="w-full h-full object-cover" 
+                      draggable="false"
+                      onTouchStart={() => setAutoplay(false)}
+                    />
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          </div>
+
+          {/* Правая колонка с описанием */}
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold mb-4">{title}</h3>
+            <p className="text-gray-600 mb-4">{description}</p>
+
+            {/* Дополнительные плитки */}
+            <div className="space-y-4">
+              <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-xl">Что входит в аренду:</h4>
+                <ul className="list-disc pl-6">
+                  <li>Световое оборудование</li>
+                  <li>Звуковая аппаратура</li>
+                  <li>Прочее оборудование для мероприятий</li>
+                </ul>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-xl">Как это работает:</h4>
+                <p className="text-gray-600">
+                  Мы доставляем оборудование на место проведения мероприятия, устанавливаем, а также предоставляем поддержку в процессе его использования.
+                </p>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-xl">Почему выбирают нас:</h4>
+                <p className="text-gray-600">
+                  Мы предоставляем высококачественное оборудование и обеспечиваем все необходимые услуги для вашего мероприятия.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Дополнительные блоки с техникой */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
+          {examples?.map((example, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:scale-105 transition-transform">
+              <h4 className="font-semibold text-xl mb-4">{example.title || `Техника ${index + 1}`}</h4>
+              <div className="h-60 overflow-hidden">
+                <img 
+                  src={example.image} 
+                  alt={`Пример использования техники ${index + 1}`} 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+              <p className="text-gray-600 mb-4">{example.description}</p>
+              <p className="text-gray-600 font-semibold">{example.price}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -50,125 +146,4 @@ const EquipmentGallery = () => {
   );
 };
 
-const EquipmentCard = ({ item, navigate }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [autoplay, setAutoplay] = useState(true);
-  const [autoplayInterval, setAutoplayInterval] = useState(null);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-  const imagesLength = item.image.length;
-  const slideRef = useRef(null);
-
-  // Функция для автоматического переключения слайдов
-  useEffect(() => {
-    if (autoplay) {
-      const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev === imagesLength - 1 ? 0 : prev + 1));
-      }, 3000);
-      setAutoplayInterval(interval);
-    } else if (autoplayInterval) {
-      clearInterval(autoplayInterval);
-    }
-
-    return () => {
-      if (autoplayInterval) {
-        clearInterval(autoplayInterval);
-      }
-    };
-  }, [autoplay, imagesLength, autoplayInterval]);
-
-  const prevSlide = (e) => {
-    if (e) e.stopPropagation();
-    setAutoplay(false);
-    setCurrentIndex((prev) => (prev === 0 ? imagesLength - 1 : prev - 1));
-  };
-
-  const nextSlide = (e) => {
-    if (e) e.stopPropagation();
-    setAutoplay(false);
-    setCurrentIndex((prev) => (prev === imagesLength - 1 ? 0 : prev + 1));
-  };
-
-  // Обработчики для свайпов
-  const handleTouchStart = (e) => {
-    setAutoplay(false);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) {
-      // Свайп влево
-      nextSlide();
-    }
-
-    if (touchStart - touchEnd < -75) {
-      // Свайп вправо
-      prevSlide();
-    }
-  };
-
-  return (
-    <div
-      className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105"
-      onClick={() => navigate(`/equipment/${item.id}`, { state: item })}
-    >
-      <div 
-        className="relative" 
-        ref={slideRef}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Картинка слайдера */}
-        <img 
-          src={item.image[currentIndex]} 
-          alt={item.title} 
-          className="w-full h-64 object-cover" 
-          draggable="false"
-        />
-
-        {/* Кнопки переключения - скрываем на мобильных */}
-        <button 
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
-          onClick={prevSlide}
-        >
-          <ChevronLeft size={24} />
-        </button>
-
-        <button 
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10 hover:bg-gray-600 hidden md:block"
-          onClick={nextSlide}
-        >
-          <ChevronRight size={24} />
-        </button>
-
-        {/* Индикатор страниц */}
-        {imagesLength > 1 && (
-          <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
-            {Array.from({ length: imagesLength }).map((_, index) => (
-              <span
-                key={index}
-                className={`h-2 w-2 rounded-full ${
-                  currentIndex === index ? 'bg-white' : 'bg-gray-400'
-                }`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Контент */}
-      <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-        <p className="text-gray-600 mb-2">{item.description}</p>
-        <button className="text-blue-600 font-medium hover:text-blue-800">Подробнее →</button>
-      </div>
-    </div>
-  );
-};
-
-export default EquipmentGallery;
+export default EquipmentDetail;
