@@ -30,5 +30,5 @@ const App = () => {
     </Router>
   );
 };
-
+//"https://wa.me/79168497675" 
 export default App;
