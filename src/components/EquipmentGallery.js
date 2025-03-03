@@ -15,6 +15,11 @@ const EquipmentGallery = () => {
         'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg'
       ], 
       description: 'Профессиональная звуковая и световая аппаратура для корпоративных мероприятий.',
+      advantages: [
+        { title: "Что входит в аренду:", description: "Световое оборудование, Звуковая аппаратура, Прочее оборудование для мероприятий" },
+        { title: "Как это работает:", description: "Мы доставляем оборудование на место проведения мероприятия, устанавливаем, а также предоставляем поддержку в процессе его использования." },
+        { title: "Почему выбирают нас:", description: "Мы предоставляем высококачественное оборудование и обеспечиваем все необходимые услуги для вашего мероприятия." }
+      ],
       examples: [
         { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оборудование 1-8 тотемов', price: '10,000 - 30,000 рублей',title: 'Световое оборудование' },
         { image: 'https://pop-music.ru/upload/medialibrary/68e/68ef33b0c36b868224aa65e5145b6d66.jpg', description: 'Звуковое оборудование 2-6кВТ', price: '10,000 - 30,000 рублей',title: 'Звуковое оборудование' },
@@ -22,13 +27,18 @@ const EquipmentGallery = () => {
     },
     { 
       id: 2, 
-      title: 'Фестивали', 
+      title: 'Фестивали, концерты', 
       image: [
         'https://s0.rbk.ru/v6_top_pics/media/img/8/21/755522302148218.jpeg', 
         'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg',
         'https://news.store.rambler.ru/img/a672e36897d359c94369a36ec38734db?img-format=auto&img-1-resize=height:400,fit:max&img-2-filter=sharpen'
       ],
       description: '',
+      advantages: [
+        { title: "Что входит в аренду:", description: "Световое оборудование, Звуковая аппаратура, Прочее оборудование для мероприятий" },
+        { title: "Как это работает:", description: "Мы доставляем оборудование на место проведения мероприятия, устанавливаем, а также предоставляем поддержку в процессе его использования." },
+        { title: "Почему выбирают нас:", description: "Мы предоставляем высококачественное оборудование и обеспечиваем все необходимые услуги для вашего мероприятия." }
+      ],
       examples: [
         { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оборудование 1-8 тотемов', price: '10,000 - 30,000 рублей',title: 'Световое оборудование' },
         { image: 'https://pop-music.ru/upload/medialibrary/68e/68ef33b0c36b868224aa65e5145b6d66.jpg', description: 'Звуковое оборудование 2-6кВТ', price: '10,000 - 30,000 рублей',title: 'Звуковое оборудование' },
@@ -44,6 +54,11 @@ const EquipmentGallery = () => {
         'https://news.store.rambler.ru/img/a672e36897d359c94369a36ec38734db?img-format=auto&img-1-resize=height:400,fit:max&img-2-filter=sharpen'
       ],
       description: '',
+      advantages: [
+        { title: "Что входит в аренду:", description: "Световое оборудование, Звуковая аппаратура, Прочее оборудование для мероприятий, Гроб для усобшего" },
+        { title: "Как это работает:", description: "Мы доставляем оборудование на место проведения мероприятия, устанавливаем, а также предоставляем поддержку в процессе его использования." },
+        { title: "Почему выбирают нас:", description: "Мы оочень любим похороны, просто живем ими." }
+      ],
       examples: [
         { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оборудование 1-8 тотемов', price: '10,000 - 30,000 рублей',title: 'Световое оборудование' },
         { image: 'https://pop-music.ru/upload/medialibrary/68e/68ef33b0c36b868224aa65e5145b6d66.jpg', description: 'Звуковое оборудование 2-6кВТ', price: '10,000 - 30,000 рублей',title: 'Звуковое оборудование' },
@@ -59,6 +74,11 @@ const EquipmentGallery = () => {
         'https://news.store.rambler.ru/img/a672e36897d359c94369a36ec38734db?img-format=auto&img-1-resize=height:400,fit:max&img-2-filter=sharpen'
       ],
       description: '',
+      advantages: [
+        { title: "Что входит в аренду:", description: "Световое оборудование, Звуковая аппаратура, Прочее оборудование для мероприятий" },
+        { title: "Как это работает:", description: "Мы доставляем оборудование на место проведения мероприятия, устанавливаем, а также предоставляем поддержку в процессе его использования." },
+        { title: "Почему выбирают нас:", description: "Мы предоставляем высококачественное оборудование и обеспечиваем все необходимые услуги для вашего мероприятия." }
+      ],
       examples: [
         { image: 'https://aksioma.rent/assets/img/totemy/d6929886cfff118b8902a1a8c0b5dbaf.jpg', description: 'Световое оборудование 1-8 тотемов', price: '10,000 - 30,000 рублей',title: 'Световое оборудование' },
         { image: 'https://pop-music.ru/upload/medialibrary/68e/68ef33b0c36b868224aa65e5145b6d66.jpg', description: 'Звуковое оборудование 2-6кВТ', price: '10,000 - 30,000 рублей',title: 'Звуковое оборудование' },

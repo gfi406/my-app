@@ -14,7 +14,7 @@ const EquipmentDetail = () => {
     return <div>Не удалось найти информацию об оборудовании.</div>;
   }
 
-  const { title, image, description, examples } = state;
+  const { title, image, description, advantages, examples } = state;
 
   const sliderSettings = {
     dots: false,
@@ -100,26 +100,27 @@ const EquipmentDetail = () => {
 
             {/* Дополнительные плитки */}
             <div className="space-y-4">
-              <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-xl">Что входит в аренду:</h4>
-                <ul className="list-disc pl-6">
-                  <li>Световое оборудование</li>
-                  <li>Звуковая аппаратура</li>
-                  <li>Прочее оборудование для мероприятий</li>
-                </ul>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-xl">Как это работает:</h4>
-                <p className="text-gray-600">
-                  Мы доставляем оборудование на место проведения мероприятия, устанавливаем, а также предоставляем поддержку в процессе его использования.
-                </p>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-xl">Почему выбирают нас:</h4>
-                <p className="text-gray-600">
-                  Мы предоставляем высококачественное оборудование и обеспечиваем все необходимые услуги для вашего мероприятия.
-                </p>
-              </div>
+              {advantages?.map((advantage, index) => (
+                <div key={index} className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                  {index === 0 ? (
+                    // Для первого пункта выводим список
+                    <>
+                      <h4 className="font-semibold text-xl">{advantage.title}</h4>
+                      <ul className="list-disc pl-5 text-gray-600">
+                        {advantage.description.split(",").map((item, idx) => (
+                          <li key={idx}>{item.trim()}</li>
+                        ))}
+                      </ul>
+                    </>
+                  ) : (
+                    // Для остальных выводим как абзац
+                    <>
+                      <h4 className="font-semibold text-xl">{advantage.title}</h4>
+                      <p className="text-gray-600">{advantage.description}</p>
+                    </>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
