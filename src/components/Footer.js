@@ -1,4 +1,5 @@
 import React from "react";
+import { FaTelegram, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -20,6 +21,17 @@ const Footer = () => {
             <p className="text-gray-400">Сб-Вс: 10:00 - 18:00</p>
           </div>
         </div>
+        
+        {/* Иконки соцсетей */}
+        <div className="flex justify-center gap-6 mt-8">
+          <a href="https://t.me/deadsanfrost" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white text-2xl">
+            <FaTelegram />
+          </a>
+          <a href="https://wa.me/79168497675" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white text-2xl">
+            <FaWhatsapp />
+          </a>
+        </div>
+        
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p>© 2025 TETHYS EVENT. Все права защищены.</p>
         </div>
