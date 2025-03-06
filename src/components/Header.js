@@ -34,7 +34,7 @@ const Header = () => {
           
           {/* Contacts on the right */}
           <div className="flex gap-6">
-            <a href="https://t.me/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 text-2xl">
+            <a href="https://t.me/deadsanfrost" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 text-2xl">
               <FaTelegram />
             </a>
             <a href="https://wa.me/79168497675" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 text-2xl">
